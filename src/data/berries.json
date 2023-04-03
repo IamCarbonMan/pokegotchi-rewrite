@@ -1,0 +1,193 @@
+{
+    "Cheri": {
+        "spicy": 10
+    },
+    "Chesto": {
+        "dry": 10
+    },
+    "Pecha": {
+        "sweet": 10
+    },
+    "Rawst": {
+        "bitter": 10
+    },
+    "Aspear": {
+        "sour": 10
+    },
+    "Leppa": {
+        "spicy": 10,
+        "sweet": 10,
+        "bitter": 10,
+        "sour": 10
+    },
+    "Oran": {
+        "spicy": 10,
+        "dry": 10,
+        "sweet": 10,
+        "bitter": 10,
+        "sour": 10
+    },
+    "Persim": {
+        "spicy": 10,
+        "dry": 10,
+        "sweet": 10,
+        "bitter": 10,
+        "sour": 10
+    },
+    "Lum": {
+        "spicy": 10,
+        "dry": 10,
+        "sweet": 10,
+        "bitter": 10,
+        "sour": 10
+    },
+    "Sitrus": {
+        "spicy": 10,
+        "dry": 10,
+        "sweet": 10,
+        "bitter": 10,
+        "sour": 10
+    },
+    "Figy": {
+        "spicy": 10
+    },
+    "Wiki": {
+        "dry": 10
+    },
+    "Mago": {
+        "sweet": 10
+    },
+    "Aguav": {
+        "bitter": 10
+    },
+    "Iapapa": {
+        "sour": 10
+    },
+    "Razz": {
+        "spicy": 10,
+        "dry": 10
+    },
+    "Bluk": {
+        "dry": 10,
+        "sweet": 10
+    },
+    "Nanab": {
+        "sweet": 10,
+        "bitter": 10
+    },
+    "Wepear": {
+        "bitter": 10,
+        "sour": 10
+    },
+    "Pinap": {
+        "spicy": 10,
+        "sour": 10
+    },
+    "Pomeg": {
+        "spicy": 10,
+        "sweet": 10,
+        "bitter": 10
+    },
+    "Kelpsy": {
+        "dry": 10,
+        "bitter": 10,
+        "sour": 10
+    },
+    "Qualot": {
+        "spicy": 10,
+        "sweet": 10,
+        "sour": 10
+    },
+    "Hondew": {
+        "spicy": 10,
+        "dry": 10,
+        "bitter": 10
+    },
+    "Grepa": {
+        "dry": 10,
+        "sweet": 10,
+        "sour": 10
+    },
+    "Tamato": {
+        "spicy": 20,
+        "dry": 10
+    },
+    "Cornn": {
+        "dry": 20,
+        "sweet": 10
+    },
+    "Magost": {
+        "sweet": 20,
+        "bitter": 10
+    },
+    "Rabuta": {
+        "bitter": 20,
+        "sour": 10
+    },
+    "Nomel": {
+        "spicy": 10,
+        "sour": 20
+    },
+    "Spelon": {
+        "spicy": 40,
+        "dry": 10
+    },
+    "Pamtre": {
+        "dry": 40,
+        "sweet": 10
+    },
+    "Watmel": {
+        "sweet": 40,
+        "bitter": 10
+    },
+    "Durin": {
+        "bitter": 40,
+        "sour": 10
+    },
+    "Belue": {
+        "spicy": 10,
+        "sour": 40
+    },
+    "Liechi": {
+        "spicy": 40,
+        "sweet": 40,
+        "sour": 10
+    },
+    "Ganlon": {
+        "dry": 40,
+        "bitter": 40
+    },
+    "Salac": {
+        "sweet": 40,
+        "sour": 40
+    },
+    "Petaya": {
+        "spicy": 40,
+        "bitter": 40
+    },
+    "Apicot": {
+        "dry": 40,
+        "sour": 40
+    },
+    "Lansat": {
+        "spicy": 10,
+        "dry": 10,
+        "sweet": 10,
+        "bitter": 10,
+        "sour": 10
+    },
+    "Starf": {
+        "spicy": 10,
+        "dry": 10,
+        "sweet": 10,
+        "bitter": 10,
+        "sour": 10
+    },
+    "Enigma": {
+        "spicy": 40,
+        "dry": 40,
+        "sweet": 40,
+        "bitter": 40,
+        "sour": 40
+    }
+}

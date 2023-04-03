@@ -1,0 +1,97 @@
+{createContext, useContext, useState, useEffect} from react
+Gun from gun/gun
+import gun/sea
+import gun/lib/radix
+import gun/lib/radisk
+import gun/lib/store
+import gun/lib/rindexed
+localforage from localforage
+
+export GunContext := createContext {}
+
+createGun := ->
+    gun := Gun
+        // peers: ['http://localhost:8765/gun']
+        localStorage: false
+    err: ''
+    key: ''
+
+authCallback := (key, ack) ->
+    [ctx, setCtx] := useContext GunContext
+    if ack.err
+        setCtx {err: ack.err, ...ctx}
+    else
+        localforage.setItem 'pokegotchi-key', key
+        ctx.gun.user().get 'loggedIn'
+                      .put new Date().toString()
+        setCtx {key, ...ctx}
+
+export signup := ->
+    [ctx, setCtx] := useContext GunContext
+    Gun.SEA.pair (key) ->
+        if key
+            ctx.gun.user().auth key, (ack) -> authCallback key, ack
+        else
+            setCtx {err: Gun.SEA.err, ...ctx}
+
+export signin := (key) ->
+    [{gun}] := useContext GunContext
+    gun.user().auth key, (ack) -> authCallback key, ack
+
+export autosignin := ->
+    [ctx, setCtx] := useContext GunContext
+    localforage.getItem 'pokegotchi-key', (err, key) ->
+        if err or !key
+            setCtx {err, ...ctx}
+        else
+            ctx.gun.user().auth key, (ack) -> authCallback key, ack
+
+export signout := ->
+    [ctx, setCtx] := useContext GunContext
+    localforage.setItem 'pokegotchi-key', '', ->
+        ctx.gun.user().leave()
+        setCtx {key: '', ...ctx}
+
+export useGunData := (path, set = false) ->
+    [data, setData] := useState ''
+    [ctx] := useContext GunContext
+    useEffect ->
+        mounted .= true
+        ev .= null
+        if ctx.key
+            node := ctx.gun.user().get path
+            cb :=  (data, id, _msg, _ev) ->
+                ev = _ev
+                if mounted
+                    {_: remove, ...rest} := data
+                    if set
+                        setData {[id]: rest, ...data}
+                    else
+                        setData rest
+            if set
+                node.map().on cb
+            else
+                node.on cb
+        return ->
+            mounted = false
+            try
+                ev.off()
+    , [ctx]
+    update := (value, id = '') ->
+        if set
+            if id
+                ctx.gun.user().get path
+                              .get id
+                              .put value
+            else
+                ctx.gun.user().get path
+                              .set value
+        else
+            ctx.gun.user().get path
+                          .put value
+    return [data, update]
+
+export GunProvider := (props) ->
+    [value] := useState createGun()
+    <GunContext.Provider {value}>
+        {props.children}

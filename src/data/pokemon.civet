@@ -1,0 +1,140 @@
+{feedBerry} from ./items.civet
+{Dex} from @pkmn/dex
+natures from ./natures.civet
+
+export genMon := (filters = defaultFilters) ->
+    let gender, mon, specieslist
+    naturelist := Object.keys natures
+    if typeof filters[0] is 'string'
+        mon = Dex.species.get filters[0]
+    else
+        specieslist = Dex.species.all()
+        for filter of filters
+            newlist := specieslist.filter filter
+            if newlist.length > 0
+                specieslist = newlist
+        mon = specieslist[Math.floor Math.random() * specieslist.length]
+    if mon.gender
+        gender = mon.gender
+    else
+        if Math.random() < mon.genderRatio.M
+            gender = 'M'
+        else
+            gender = 'F'
+    return
+        id: getId mon.id
+        nature: naturelist[Math.floor Math.random() * naturelist.length]
+        happiness: 70
+        gender: gender
+        shiny: Math.random() < 0.0025
+
+export getName := (id) ->
+    {name} := Dex.species.get id
+    if 'Alola' is in name
+        return `Alolan ${(name.split '-')[0]}`
+    if 'Galar' is in name
+        return `Galarian ${(name.split '-')[0]}`
+    if 'Paldea' is in name
+        if 'Tauros' is in name
+            return `${(name.split '-')[2]} Tauros`
+        return 'Paldean Wooper'
+    if (name.endsWith '-F') or (name.endsWith '-M')
+        return (name.split '-')[0]
+    // if name.startsWith 'Unown'
+    // if name.startsWith 'Burmy'
+    // if name.startsWith 'Shellos'
+    // if name.startsWith 'Gastrodon'
+    // if name.startsWith 'Deerling'
+    // if name.startsWith 'Sawsbuck'
+    // if name.startsWith 'Vivillon'
+    // if name.startsWith 'Flabebe'
+    // if name.startsWith 'Floette'
+    // if name.startsWith 'Florges'
+    // if name.startsWith 'Furfrou'
+    // if name.startsWith 'Minior'
+    // if name.startsWith 'Alcremie'
+    // if name.startsWith 'Tatsugiri'
+    // if name.startsWith 'Dudunsparce'
+    // if name.startsWith 'Wormadam'
+    // if name.startsWith 'Basculin'
+    // if name.startsWith 'Oricorio'
+    // if name.startsWith 'Wormadam'
+    // if name.startsWith 'Basculin'
+    // if name.startsWith ''
+    // if name.startsWith ''
+    // if name.startsWith ''
+    // if name.startsWith ''
+    for species of ['Wormadam', 'Basculin', 'Oricorio', 'Toxtricity', 'Squawkabilly', 'Castform', 'Lycanroc', 'Vivillon', 'Maushold', 'Pichu', 'Sinistea', 'Polteageist', 'Dudunsparce', 'Pikachu', 'Rotom', 'Gimmighoul', 'Floette', 'Pumpkaboo', 'Gourgeist', 'Cherrim', 'Unown', 'Burmy', 'Wormadam', 'Flabebe', 'Floette', 'Florges', 'Shellos', 'Gastrodon', 'Deerling', 'Sawsbuck', 'Tatsugiri', 'Furfrou', 'Alcremie', 'Vivillon']
+        if species is in name
+            return (name.split '-')[0]
+    return name
+
+formeTable := {
+    unown: (Array.from 'bcdefghijklmnopqrstuvwxyz').concat ['', 'exclamation', 'question']
+    burmy: ['', 'sandy', 'trash']
+    shellos: ['', 'east']
+    gastrodon: ['', 'east']
+    deerling: ['', 'summer', 'autumn', 'winter']
+    sawsbuck: ['', 'summer', 'autumn', 'winter']
+    vivillon: ['', 'archipelago', 'continental', 'elegant', 'garden', 'highplains', 'icysnow', 'jungle', 'marine', 'modern', 'monsoon', 'ocean', 'polar', 'river', 'sandstorm', 'savanna', 'sun', 'tundra']
+    flabebe: ['', 'blue', 'orange', 'white', 'yellow']
+    floette: ['', 'blue', 'orange', 'white', 'yellow']
+    florges: ['', 'blue', 'orange', 'white', 'yellow']
+    furfrou: ['', 'dandy', 'debutante', 'diamond', 'heart', 'kabuki', 'lareine', 'matron', 'pharaoh', 'star']
+    minior: ['', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+    alcremie: ['', 'rubycream', 'matchacream', 'mintcream', 'lemoncream', 'saltedcream', 'rubyswirl', 'caramelswirl', 'rainbowswirl']
+    tatsugiri: ['', 'droopy', 'stretchy'],
+    dudunsparce: Array(99).fill('').concat(['threesegment'])
+}
+
+export getId := (id) ->
+    if id is in Object.keys formeTable
+        formes := formeTable[id]
+        return `${id}${formes[Math.floor Math.random() * formes.length]}`
+    return id
+
+export defaultFilters := [basicFilter, specialFilter, gimmickFilter, formeFilter, compatFilter]
+
+export basicFilter := (mon) -> !mon.prevo
+
+export specialFilter := (mon) ->
+    for tag of ['Paradox', 'Legendary', 'Mythical', 'Sub-Legendary', 'Restricted Legendary']
+        if tag is in mon.tags
+            return false
+    return true
+
+export gimmickFilter := (mon) -> 'Mega' is not in mon.forme and 'Gmax' is not in mon.forme
+
+export formeFilter := (mon) ->
+    for forme of ['Therian', 'Silvally-', 'Genesect-', 'Pirouette', 'Primal', 'Deoxys-', 'Origin', 'Zygarde-', 'Unbound', '-Sky', 'Arceus-', 'Kyurem-', 'Resolute', 'Aegislash-', 'Wishiwashi-', 'Mimikyu-', 'Eiscue-', 'Morpeko-', 'Palafin-', 'Darmanitan-', 'Venomicon-', 'Busted', 'Necrozma-', 'Crowned', 'Eternamax', 'Calyrex-']
+        if forme is in mon.name
+            return false
+    return true
+
+export compatFilter := (mon) ->
+    if 'Totem' is in mon.forme
+        return false
+    if mon.isNonstandard is in ['LGPE', 'Custom']
+        unless mon.name is 'MissingNo.'
+            return false
+    if mon.forme is in ['Ash', 'Gulping', 'Gorging', 'Fancy', 'Pokeball', 'Spiky-Eared', 'Neutral', 'Dada', 'Original']
+        return false
+    return true
+
+export petMon := (mon) ->
+    now := new Date().getTime()
+    if mon.lastPet < now - 3600000
+        return
+            lastPet: now
+            pets: 1
+            happiness: mon.happiness + 1
+    if mon.pets <= 3
+        return
+            pets: mon.pets + 1
+            happiness: mon.happiness + 1
+
+export feedMon := (mon, berry, inventory) ->
+    now := new Date().getTime()
+    if mon.lastFed < now - 21600000
+        return feedBerry berry, mon, inventory
+    return false
